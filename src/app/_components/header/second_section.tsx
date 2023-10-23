@@ -1,24 +1,17 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { Bell, Link, Plus, Search, User } from "lucide-react";
-import { type Session } from "next-auth";
+import { SignInButton, UserButton, useAuth } from "@clerk/nextjs";
+import { Bell, LogIn, Plus, Search } from "lucide-react";
 import { useUIStore } from "~/store/uiStore";
 import { Button } from "../ui/button";
 
-type PageHeaderSecondSectionProps = {
-  session: Session | null;
-};
-
-export function PageHeaderSecondSection({
-  session,
-}: PageHeaderSecondSectionProps) {
-  "use client";
+export function PageHeaderSecondSection() {
+  const { isSignedIn, isLoaded } = useAuth();
   const { fullWidthSearch, showFullWidthSearch } = useUIStore();
 
   return (
     <div
-      className={`flex-shrink-0 md:gap-2 ${
+      className={`mr-2 flex-shrink-0 items-center md:gap-2 ${
         fullWidthSearch ? "hidden" : "flex"
       }`}
     >
@@ -36,21 +29,18 @@ export function PageHeaderSecondSection({
       <Button size="icon" variant="ghost">
         <Bell />
       </Button>
-      {session ? (
-        <Link href={"/api/auth/signout"}>
-          <Avatar>
-            <AvatarImage src={session.user.image ?? undefined} />
-            <AvatarFallback>
-              {session.user.name?.charAt(0).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-        </Link>
+      {!isLoaded ? (
+        <div>Loading...</div>
+      ) : isSignedIn ? (
+        <div className="ml-2 cursor-pointer">
+          <UserButton afterSignOutUrl="/" />
+        </div>
       ) : (
-        <Link href={"/api/auth/signin"}>
-          <Button size="icon" variant="ghost">
-            <User />
-          </Button>
-        </Link>
+        <div className="ml-2 cursor-pointer">
+          <SignInButton afterSignInUrl="/" afterSignUpUrl="/">
+            <LogIn />
+          </SignInButton>
+        </div>
       )}
     </div>
   );

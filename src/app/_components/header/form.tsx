@@ -6,7 +6,6 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
 export function PageHeaderForm() {
-  "use client";
   const { fullWidthSearch, hideFullWidthSearch } = useUIStore();
 
   return (

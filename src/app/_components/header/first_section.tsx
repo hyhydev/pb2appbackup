@@ -1,12 +1,12 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { Menu } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import { useUIStore } from "~/store/uiStore";
 import { Button } from "../ui/button";
 
 export function PageHeaderFirstSection() {
-  "use client";
   const { fullWidthSearch } = useUIStore();
   // const { toggle } = useSidebarContext();
 
@@ -20,13 +20,15 @@ export function PageHeaderFirstSection() {
       <Button variant="ghost" size="icon">
         <Menu />
       </Button>
-      <a href="/">
-        <img
-          src={"https://i.imgur.com/oIMyQmn.png"}
+      <Link href="/">
+        <Image
+          src="https://i.imgur.com/oIMyQmn.png"
           alt="logo"
+          width={48}
+          height={48}
           className="h-12"
         />
-      </a>
+      </Link>
     </div>
   );
 }
