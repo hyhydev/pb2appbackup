@@ -4,15 +4,6 @@ import { Character, Environment, Speed, Stage, Type } from "@prisma/client";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const playRouter = createTRPCRouter({
-  getById: publicProcedure.input(z.string().cuid()).query(({ ctx, input }) => {
-    return ctx.db.play.findUnique({
-      where: { id: input },
-      include: {
-        user: { select: { name: true } },
-        bookmarks: { where: { userId: ctx.session?.user.id } },
-      },
-    });
-  }),
   getAllApproved: publicProcedure
     .input(
       z.object({
@@ -46,7 +37,7 @@ export const playRouter = createTRPCRouter({
         skip: (input.currentPage - 1) * input.pageSize,
         take: input.pageSize,
         include: {
-          user: { select: { name: true } },
+          user: { select: { id: true, name: true, image: true } },
           bookmarks: { where: { userId: ctx.session?.user.id } },
         },
       });

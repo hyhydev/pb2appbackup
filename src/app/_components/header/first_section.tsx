@@ -3,12 +3,13 @@
 import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSidebarContext } from "~/contexts/SidebarContext";
 import { useUIStore } from "~/store/uiStore";
 import { Button } from "../ui/button";
 
 export function PageHeaderFirstSection() {
   const { fullWidthSearch } = useUIStore();
-  // const { toggle } = useSidebarContext();
+  const { toggle } = useSidebarContext();
 
   return (
     <div
@@ -16,8 +17,7 @@ export function PageHeaderFirstSection() {
         fullWidthSearch ? "hidden" : "flex"
       }`}
     >
-      {/* <Button onClick={toggle} variant="ghost" size="icon"> */}
-      <Button variant="ghost" size="icon">
+      <Button onClick={toggle} variant="ghost" size="icon">
         <Menu />
       </Button>
       <Link href="/">
